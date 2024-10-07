@@ -34,15 +34,14 @@ FetchContent_MakeAvailable(glew)
 # Our Project
 set(SOURCE_FILES
     src/main.cpp
-	# otherFile.cpp
+    src/RK4.cpp
 	)
 
-#set(HEADER_FILES
-#    header1.hpp
-#	)
+set(HEADER_FILES
+    src/RK4.hpp
+	)
 
-add_executable(${PROJECT_NAME} ${SOURCE_FILES})
-# ^ Don't forget about the ${HEADER_FILES} 
+add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${HEADER_FILES})
 target_link_libraries(${PROJECT_NAME} OpenGL::GL glfw libglew_static)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
