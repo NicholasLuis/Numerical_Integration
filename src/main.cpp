@@ -8,10 +8,22 @@
 
 const double PI = 3.141592653;
 
-std::vector<double> dotProd(const double arr[3][3], const std::vector<double> pqr_input)
+std::vector<double> matMult(const double arr[3][3], const std::vector<double> pqr_input)
 {
 	// Hard-coded matrix multiplcation of a 3x3 by a 3x1
 	// see https://images.app.goo.gl/sqXoj4H7qKbAi8V48
+	std::vector<double> outputVec;
+
+	outputVec[0] = (arr[0][0] * pqr_input[0]) + (arr[0][1] * pqr_input[1]) + (arr[0][2] * pqr_input[2]);
+	outputVec[1] = (arr[1][0] * pqr_input[0]) + (arr[1][1] * pqr_input[1]) + (arr[1][2] * pqr_input[2]);
+	outputVec[2] = (arr[2][0] * pqr_input[0]) + (arr[2][1] * pqr_input[1]) + (arr[2][2] * pqr_input[2]);
+
+	return outputVec;
+}
+
+std::array<std::array<double, 3>, 3> matMult(const double arr1[3][3], const double arr2[3][3])
+{
+	// Hard-coded matrix multiplcation of a 3x3 by a 3x3 
 }
 
 std::vector<double> ffunc(double t)
@@ -23,19 +35,28 @@ std::vector<double> ffunc(double t)
 	return { p, q, r };
 }
 
-std::vector<double> dfunc(const std::vector<double> x, const double DCM[3][3], const std::vector<double> velo, double t)
+std::vector<std::vector<double>> dfunc(const std::vector<double> x, const double DCM[3][3], const std::vector<double> velo, double t)
 {
+	// This function will return xdot and cdot
+
 	double phi = x[0];
 	double theta = x[1];
 	double rho = x[2];
 	std::vector<double> pqr = ffunc(t);
-	std::vector<double> pqr_dot;
+	std::vector<double> xdot;
 
 	// Gimbal Equation
-	pqr_dot = dotProd( DCM , pqr);
+	double d_DCM[3][3] = {{1,		tan(theta)* sin(phi),	tan(theta)*cos(phi)	 },
+						  {0,		cos(phi),				-sin(phi)			 },
+						  {0,		sin(phi)/cos(theta),	cos(phi) / cos(theta)} };
+
+	xdot = matMult(d_DCM, pqr);
 
 	// Strapdown Equation
-
+	double UpdateMatrix[3][3] = { {0,		-pqr[2],	pqr[1]	},
+								  {pqr[2],	0,			-pqr[0]	},
+								  {-pqr[1],	pqr[0],		0		} };
+	Cdot = matMult(d_DCM, UpdateMatrix)
 }
 
 int main()
