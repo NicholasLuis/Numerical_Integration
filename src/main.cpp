@@ -23,8 +23,20 @@ std::vector<double> matMult(const double arr[3][3], const std::vector<double> pq
 
 std::array<std::array<double, 3>, 3> matMult(const double arr1[3][3], const double arr2[3][3])
 {
-	// Hard-coded matrix multiplcation of a 3x3 by a 3x3 
+	// Hard-coded matrix multiplcation of a 3x3 by a 3x3 (Overload function)
+	std::array<std::array<double, 3>, 3> arrOut;
+
+	for (int i = 0; i < 3; i++) {         // Iterates over rows of arr1
+		for (int j = 0; j < 3; j++) {     // Iterates over cols of arr2
+			for (int k = 0; k < 3; k++) { // Iterates over cols of arr1 & rows of arr2
+				arrOut[i][j] = arr1[i][k] * arr2[k][j];
+			}
+		}
+	}
+
+	return arrOut;
 }
+
 
 std::vector<double> ffunc(double t)
 {
@@ -35,7 +47,7 @@ std::vector<double> ffunc(double t)
 	return { p, q, r };
 }
 
-std::vector<std::vector<double>> dfunc(const std::vector<double> x, const double DCM[3][3], const std::vector<double> velo, double t)
+std::array<std::array<double, 3>, 3> dfunc(const std::vector<double> x, const double DCM[3][3], const std::vector<double> velo, double t)
 {
 	// This function will return xdot and cdot
 
@@ -43,20 +55,33 @@ std::vector<std::vector<double>> dfunc(const std::vector<double> x, const double
 	double theta = x[1];
 	double rho = x[2];
 	std::vector<double> pqr = ffunc(t);
-	std::vector<double> xdot;
+	std::vector<double> q_dot;
 
 	// Gimbal Equation
-	double d_DCM[3][3] = {{1,		tan(theta)* sin(phi),	tan(theta)*cos(phi)	 },
+	double eRate[3][3] = {{1,		tan(theta)* sin(phi),	tan(theta)*cos(phi)	 },
 						  {0,		cos(phi),				-sin(phi)			 },
 						  {0,		sin(phi)/cos(theta),	cos(phi) / cos(theta)} };
 
-	xdot = matMult(d_DCM, pqr);
+	q_dot = matMult(eRate, pqr);
 
 	// Strapdown Equation
 	double UpdateMatrix[3][3] = { {0,		-pqr[2],	pqr[1]	},
 								  {pqr[2],	0,			-pqr[0]	},
 								  {-pqr[1],	pqr[0],		0		} };
-	Cdot = matMult(d_DCM, UpdateMatrix)
+	std::array<std::array<double, 3>, 3> DCM_dot = matMult(DCM, UpdateMatrix);
+
+	// Expressing xdot (in NED frame) and d_DCM (rate of change of DCM matrix)
+	std::vector<double> V_NED = matMult(DCM, velo);
+
+	// Outputing complete state: Euler angle rates, velocity derivatives, and velocity in NED frame
+	std::array<std::array<double, 3>, 3> xdot;
+	for (int i = 0; i < 3; i++) {
+		xdot[0][i] = q_dot[i];
+		xdot[1][i] = 0;
+		xdot[2][i] = V_NED[i];
+	}
+
+	return xdot;
 }
 
 int main()
