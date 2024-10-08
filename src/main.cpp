@@ -47,9 +47,10 @@ std::vector<double> ffunc(double t)
 	return { p, q, r };
 }
 
-std::array<std::array<double, 3>, 3> dfunc(const std::vector<double> x, const double DCM[3][3], const std::vector<double> velo, double t)
+std::array<double, 9> dfunc(const std::vector<double> x, const double DCM[3][3], const std::vector<double> velo, double t)
 {
-	// This function will return xdot and cdot
+	// This function will output the derivative of the state vector as well as the rate of change of the DCM angles
+	std::array<std::array<double, 9>, 2>;
 
 	double phi = x[0];
 	double theta = x[1];
@@ -69,26 +70,44 @@ std::array<std::array<double, 3>, 3> dfunc(const std::vector<double> x, const do
 								  {pqr[2],	0,			-pqr[0]	},
 								  {-pqr[1],	pqr[0],		0		} };
 	std::array<std::array<double, 3>, 3> DCM_dot = matMult(DCM, UpdateMatrix);
+	
+	// Converting the 3x3 matrix to a 1x9 vector
+
 
 	// Expressing xdot (in NED frame) and d_DCM (rate of change of DCM matrix)
 	std::vector<double> V_NED = matMult(DCM, velo);
 
-	// Outputing complete state: Euler angle rates, velocity derivatives, and velocity in NED frame
-	std::array<std::array<double, 3>, 3> xdot;
+	// Create complete state vector: Euler angle rates, velocity derivatives, and velocity in NED frame
+	std::array<double, 9> xdot;
 	for (int i = 0; i < 3; i++) {
-		xdot[0][i] = q_dot[i];
-		xdot[1][i] = 0;
-		xdot[2][i] = V_NED[i];
+		xdot[i]   = q_dot[i];
+		xdot[i+3] = 0;
+		xdot[i+6] = V_NED[i];
 	}
 
-	return xdot;
+	return output; // 1st line of the output is the state vector. 2nd line is the CDot (d/dt of the DCM)
 }
 
 int main()
 {
-	double dt = 0.01;
+	double dt = 0.2; // Iterate with different dt: 0.2, 0.1, 0.025, 0.0125
 	double x0[3] = { 0, 0, 0 };
 	double Velo[3] = { 60 * 6076 / 3600 , 0 , 0}; // Speed of the aircraft in ft/s
+	double t = 0.0;
+
+	// Generating the full state vector
+	std::array<double, 9> x;
+	for (int i = 0; i < 3; i++) {
+		x[i]   = x0[i];
+		x[i+3] = Velo[i];
+		x[i+6] = 0;
+	}
+	double tmax = 20.0;
+
+	// Creating DCM
+	double DCM[3][3] = { {1,	0,			0},
+						 {0,	cos(phi),	-sin(phi)			 },
+						 {0,	sin(phi),	cos(phi) / cos(theta)} };
 
 	// Plotting Stuff
 	{
@@ -96,7 +115,7 @@ int main()
 			std::cerr << "Failed to initialize GLFW" << std::endl;
 			return -1;
 		}
-		GLFWwindow* window = glfwCreateWindow(500, 500, "Plotting stuff", NULL, NULL);
+		GLFWwindow* window = glfwCreateWindow(1000, 500, "Plotting stuff", NULL, NULL);
 		if (!window) {
 			std::cerr << "Failed to create GLFW window" << std::endl;
 			glfwTerminate();
