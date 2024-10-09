@@ -201,7 +201,7 @@ std::array<std::array<double, 9>, 2> derivative(const std::vector<double> x, con
 int main()
 {
 	double dt = 0.2; // Iterate with different dt: 0.2, 0.1, 0.025, 0.0125
-	std::vector<double> x0 = { 0, 0, 0 };
+	std::vector<double> x0 = { 0, 0, 0 }; // Initial angles
 	std::vector<double> Velo = {60 * 6076 / 3600 , 0 , 0}; // Speed of the aircraft in ft/s
 	const double t0 = 0.0;
 	const double tmax = 20.0;
@@ -228,13 +228,13 @@ int main()
 	std::array<std::array<double, 9>, 2> stateArray;
 	std::array<std::array<double, 3>, 3> Cdot1, Cdot2, Cdot3, Cdot4;
 	std::vector<double> xdot1(9), xdot2(9), xdot3(9), xdot4(9);
-	const int maxIterations = (int)((tmax - t0) / dt) + 1;
+	const int maxIterations = (int)((tmax - t0) / dt) + 2;
 	std::vector<std::vector<double>> x_history(maxIterations, std::vector<double>(9)); // this matrix saves the state vector data at every time step; will be used to plot later
 	std::vector<std::vector<double>> xdot_history(maxIterations, std::vector<double>(9)); // this matrix saves the state d/dt of vector data at every time step; will be used to plot later
 	std::array<std::array<double, 3>, 3>  totalCdot;
-
+	std::cout << "iterations = " << maxIterations << std::endl;
+	int cntr = 0;
 	for (double t = t0; t < tmax; t += dt) {
-		int cntr = 0;
 
 		// Calculates the 4 estimates of derivative over the time interval
 		stateArray = derivative(x, DCM, Velo, t);
@@ -259,7 +259,10 @@ int main()
 
 		// Update our state vector
 		x_history[cntr + 1] = matAdd(x_history[cntr], matMult(xdot_history[cntr],dt));
+		x = x_history[cntr+1];
 		DCM = matAdd(DCM, matMult(totalCdot, dt));
+
+		std::cout << "x_hist  = " << x_history[cntr + 1][1] << std::endl;
 
 		cntr++;
 	}
