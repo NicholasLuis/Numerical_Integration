@@ -18,6 +18,7 @@
 		- Create a class that handles matrix math (DONE)
 		- Create an RK4 class/function
 	- plot stuff
+		- Use 
 */
 
 const double PI = 3.141592653;

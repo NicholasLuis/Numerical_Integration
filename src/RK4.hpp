@@ -32,7 +32,7 @@ private:
 	std::vector<double> ffunc(double t);
 	std::array<std::array<double, 9>, 2> derivative(const std::vector<double> x, const std::array<std::array<double, 3>, 3> DCM, const std::vector<double> velo, const double t);
 public:
-	RK4(); // Constructor
+	RK4(const double input_dt, const double input_t0, const double input_tmax, std::vector<double> input_x0, std::vector<double> input_Velo); // Constructor
 	void run();
 };
 

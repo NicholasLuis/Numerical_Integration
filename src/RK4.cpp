@@ -1,6 +1,14 @@
 #include "RK4.hpp"
+#include "MatrixMath.hpp"
 
-// This file is the implementation of RK4.hpp, which does all the necessary calculations
+// This file is the implementation of RK4.hpp. It does all the necessary calculations for Runge Kutta
+
+// Constructor
+RK4::RK4(const double input_dt, const double input_t0, const double input_tmax, std::vector<double> input_x0, std::vector<double> input_Velo)
+	: dt(input_dt), t0(input_t0), tmax(input_tmax), x0(input_x0), Velo(input_Velo)
+{
+	// std::cout << "RK4 object is created" << std::endl;
+}
 
 std::vector<double> RK4::ffunc(double t)
 {
@@ -58,4 +66,9 @@ std::array<std::array<double, 9>, 2> RK4::derivative(const std::vector<double> x
 	}
 
 	return output; // 1st line of the output is the state vector. 2nd line is the CDot (d/dt of the DCM)
+}
+
+void RK4::run()
+{
+	// This function will iterate from t0 -> tmax
 }
