@@ -35,10 +35,12 @@ FetchContent_MakeAvailable(glew)
 set(SOURCE_FILES
     src/main.cpp
     src/RK4.cpp
+	src/MatrixMath.cpp
 	)
 
 set(HEADER_FILES
     src/RK4.hpp
+	src/MatrixMath.hpp
 	)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${HEADER_FILES})
