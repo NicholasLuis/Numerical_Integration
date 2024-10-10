@@ -39,7 +39,7 @@ int main()
 
 	// Running the numerical integrator and saving the data
 	NumericalIterator.run();
-	std::vector<double> timeVector1;
+	std::vector<double> timeVector1 = NumericalIterator.getTimeVec();
 	std::vector<std::vector<double>> X_totalData = NumericalIterator.getXhistData();
 	std::vector<std::vector<double>> Xdot_totalData = NumericalIterator.getXdotHistData();
 
@@ -105,7 +105,10 @@ int main()
 	}
 
 	// Plotting Stuff
-
+	
+	// Plotting pqr vs time
+		matplotlibcpp::figure();
+		matplotlibcpp::plot(p, timeVector1, "r-");
 
 	return 0;
 }

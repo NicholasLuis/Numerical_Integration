@@ -22,8 +22,8 @@ set(HEADER_FILES
 	)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${HEADER_FILES})
-target_include_directories(${PROJECT_NAME} PRIVATE ${Python3_INCLUDE_DIRS})
-target_link_libraries(${PROJECT_NAME} ${Python3_LIBRARIES})
+target_include_directories(${PROJECT_NAME} PRIVATE ${Python3_INCLUDE_DIRS} ${Python3_NumPy_INCLUDE_DIRS})
+target_link_libraries(${PROJECT_NAME} ${Python3_LIBRARIES} ${Python3_NumPy_LIBRARIES})
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
