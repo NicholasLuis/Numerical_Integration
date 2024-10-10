@@ -96,7 +96,7 @@ std::vector<std::vector<double>> RK4::getXdotHistData()
 std::vector<double> RK4::getTimeVec()
 {
 	std::vector<double> output;
-	for (int i = 0; i < tmax; i += dt)
+	for (double i = 0; i < tmax; i += dt)
 	{
 		output[i] = dt;
 	}
