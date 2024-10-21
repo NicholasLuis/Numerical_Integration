@@ -98,7 +98,7 @@ std::vector<double> RK4::getTimeVec()
 	std::vector<double> output;
 	for (double i = 0; i < tmax; i += dt)
 	{
-		output[i] = dt;
+		output.push_back(i);
 	}
 	return output;
 }
