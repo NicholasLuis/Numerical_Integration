@@ -125,8 +125,8 @@ int main()
 		//std::cout << timeVector[i] << "\t" << p[i] << "\t" << q[i] << "\t" << r[i] << std::endl; // Angular velocity
 		//std::cout << timeVector[i] << "\t" << phi_dot[i] << "\t" << theta_dot[i] << "\t" << psi_dot[i] << std::endl; // Euler angle rates
 		//std::cout << timeVector[i] << "\t" << phi[i] << "\t" << theta[i] << "\t" << psi[i] << std::endl; // Euler angles
-		//std::cout << timeVector[i] << "\t" << V1[i] << "\t" << V2[i] << "\t" << V3[i] << "\t" << Vmag[i] << std::endl; // Velocities
-		std::cout << timeVector[i] << "\t" << X1[i] << "\t" << X2[i] << "\t" << X3[i] << "\t" << Xmag[i] << std::endl; // Position
+		std::cout << timeVector[i] << "\t" << V1[i] << "\t" << V2[i] << "\t" << V3[i] << "\t" << Vmag[i] << std::endl; // Velocities
+		//std::cout << timeVector[i] << "\t" << X1[i] << "\t" << X2[i] << "\t" << X3[i] << "\t" << Xmag[i] << std::endl; // Position
 
 	}
 	std::cout << "COPY AND PASTE THE ABOVE DATA INTO EXCEL (TAB DELIMITER)" << std::endl;

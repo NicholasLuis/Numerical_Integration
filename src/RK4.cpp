@@ -10,7 +10,24 @@ RK4::RK4(const double input_dt, const double input_t0, const double input_tmax, 
 	x_history(maxIterations, std::vector<double>(9)), xdot_history(maxIterations, std::vector<double>(9)),
 	phi(x[0]), theta(x[1]), psi(x[2]), DCM({ { {1,	0,	 0}, {0,	1,	 0}, {0,	0,	 1} } })
 {
-	// std::cout << "RK4 object is created" << std::endl;
+	// Generating DCM Rotation Matrix
+	std::array<std::array<double, 3>, 3> rotation =
+	{ { {1,				0,				0	},
+		{0,			cos(phi),	-sin(phi)	},
+		{0,			sin(phi),	cos(phi)	} } };
+	DCM = matMult(rotation, DCM);
+	
+	rotation =
+	{ { {cos(theta),		0,			sin(theta)	},
+		{0,					1,			0	},
+		{-sin(theta),		0,			cos(theta)	}}};
+	DCM = matMult(rotation, DCM);
+
+	rotation =
+	{ { {cos(psi),		-sin(psi),		0	},
+		{sin(psi),		cos(psi),		0	},
+		{0,				0,				1	}} };
+	DCM = matMult(rotation, DCM);
 
 	// Generating the full state vector
 	for (int i = 0; i < 3; i++) {

@@ -49,7 +49,6 @@ set(SOURCE_FILES
 set(HEADER_FILES
     src/RK4.hpp
 	src/MatrixMath.hpp
-	src/matplotlibcpp.h
 	)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${HEADER_FILES})
