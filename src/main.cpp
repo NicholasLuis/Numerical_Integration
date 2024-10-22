@@ -5,7 +5,7 @@
 #include <array>
 #include "RK4.hpp"
 #include "MatrixMath.hpp"
-#include <matplot/matplot.h>
+#include "PlotData.hpp"
 
 /*
 	To do list:
@@ -119,22 +119,25 @@ int main()
 
 	// Plotting stuff in MatplotPlusPlus
 
-	auto fig1 = matplot::figure();
-	fig1->size(1800, 600);
+	std::vector<std::string> plotLabels = { "Angular Velocities as a Function of Time", "Time (s)", "Angular Velocity (rad / s)" };
+	std::vector<std::string> inputLabels = { "p", "q", "r" };
+	//plot(plotLabels, inputLabels, timeVector, p, q, r);
 
-	auto pplot = matplot::plot(timeVector,p);
-	matplot::hold("on");
-	auto qplot = matplot::plot(timeVector, q);
-	auto rplot = matplot::plot(timeVector, r);
+	plotLabels = { "Euler Angle Rates", "Time (s)", "Angle rate of change (rad / s)" };
+	inputLabels = { "Phi dot", "Theta Dot", "Psi Dot" };
+	//plot(plotLabels, inputLabels, timeVector, phi_dot, theta_dot, psi_dot);
 
-	auto l = ::matplot::legend({ "q", "q", "r"});
-	l->location(matplot::legend::general_alignment::topright);
-	l->num_rows(2);
-	matplot::title("Angular Velocities");
-	matplot::xlabel("Time (s)");
-	matplot::ylabel("Angular Velocity (rad / s)");
+	plotLabels = { "Euler Angle", "Time (s)", "Angle (rad)" };
+	inputLabels = { "Phi", "Theta", "Psi" };
+	//plot(plotLabels, inputLabels, timeVector, phi, theta, psi);
 
-	matplot::show();
+	plotLabels = { "Velocity Components", "Time (s)", "Speed (ft/s)" };
+	inputLabels = { "V_N", "V_E", "V_D", "V"};
+	plot(plotLabels, inputLabels, timeVector, V1, V2, V3, Vmag);
+
+	plotLabels = { "Position Components", "Time (s)", "Position (ft)" };
+	inputLabels = { "P_N", "P_E", "P_D", "P"};
+	plot(plotLabels, inputLabels, timeVector, X1, X2, X3, Xmag);
 
 	return 0;
 }
