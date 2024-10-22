@@ -118,7 +118,22 @@ int main()
 	*/
 
 	// Plotting stuff in MatplotPlusPlus
-	matplot::plot(timeVector,p);
+
+	auto fig1 = matplot::figure();
+	fig1->size(1800, 600);
+
+	auto pplot = matplot::plot(timeVector,p);
+	matplot::hold("on");
+	auto qplot = matplot::plot(timeVector, q);
+	auto rplot = matplot::plot(timeVector, r);
+
+	auto l = ::matplot::legend({ "q", "q", "r"});
+	l->location(matplot::legend::general_alignment::topright);
+	l->num_rows(2);
+	matplot::title("Angular Velocities");
+	matplot::xlabel("Time (s)");
+	matplot::ylabel("Angular Velocity (rad / s)");
+
 	matplot::show();
 
 	return 0;

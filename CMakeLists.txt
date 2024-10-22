@@ -16,11 +16,13 @@ set(SOURCE_FILES
     src/main.cpp
     src/RK4.cpp
 	src/MatrixMath.cpp
+	src/PlotData.cpp
 	)
 
 set(HEADER_FILES
     src/RK4.hpp
 	src/MatrixMath.hpp
+	src/PlotData.hpp
 	)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${HEADER_FILES})
