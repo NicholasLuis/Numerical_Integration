@@ -4,8 +4,8 @@ project(NINT VERSION 0.1.0 LANGUAGES C CXX)
 include(CTest)
 enable_testing()
 
-# Library target
-
+# Library
+add_subdirectory(matplotplusplus)
 
 # Our Project
 set(SOURCE_FILES
@@ -20,6 +20,7 @@ set(HEADER_FILES
 	)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${HEADER_FILES})
+target_link_libraries(${PROJECT_NAME} PUBLIC matplot)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

@@ -5,22 +5,13 @@
 #include <array>
 #include "RK4.hpp"
 #include "MatrixMath.hpp"
-
+#include <matplot/matplot.h>
 
 /*
 	To do list:
 
-	- plot stuff (need to separate all the data into 1-line vectors)
-		- pqr: degrees/sec vs time (output of ffunc)
-		- Phi dot, Theta dot, Psi dot: degrees/sec vs time (elements 0->2 of the d/dt state vector, x_dot)
-		- Phi, Theta, Psi: degrees vs time (elements 0->2 of the state vector, x)
-		- velocity (elements 6->8 of the d/dt state vector, x_dot)
-		- position (elements 6->8 of the state vector, x)
-	
-	- finish coding numberical integration (DONE)
-	- break code into different files for readability (DONE)
-		- Create a class that handles matrix math (DONE)
-		- Create an RK4 class/function (DONE)
+	- fix issue with velocities (probably a DCM problem)
+	- plot data using matplotplusplus
 */
 
 const double PI = 3.14159265358979323846;
@@ -109,28 +100,25 @@ int main()
 		Xmag[i] = sqrt((X1[i] * X1[i]) + (X2[i] * X2[i]) + (X3[i] * X3[i]));
 	}
 
-	// Plotting Stuff in 
+	// Plotting Stuff in Excel
 
-	//std::cout << "Time\tp\tq\tr\tPhiDot\tThetaDot\tPsiDot\tPhi\tTheta\tPsi\tVn\tVe\tVd\tVmag" << std::endl;
-	//for (int i = 0; i < timeVector.size(); i++)
-	//{
-	//	std::cout << timeVector[i] << "\t" << p[i] << "\t" << q[i] << "\t" << r[i] << "\t" << phi_dot[i] << "\t" << theta_dot[i] << "\t" << psi_dot[i] << "\t"
-	//		<< phi[i] << "\t" << theta[i] << "\t" << psi[i] << "\t" << V1[i] << "\t" << V2[i] << "\t" << V3[i] << "\t" << Vmag[i] << "\t" << std::endl;
-	//}
-
-	// Above code does not output correctly. So, have to print only a few columns at a time
+	/*
+	// Full data does not output correctly. So, have to print only a few columns at a time
 	for (int i = 0; i < timeVector.size(); i++)
 	{
-		// Uncommment each line to get its data
+		// Un-Commment each line to get its data
 		//std::cout << timeVector[i] << "\t" << p[i] << "\t" << q[i] << "\t" << r[i] << std::endl; // Angular velocity
 		//std::cout << timeVector[i] << "\t" << phi_dot[i] << "\t" << theta_dot[i] << "\t" << psi_dot[i] << std::endl; // Euler angle rates
 		//std::cout << timeVector[i] << "\t" << phi[i] << "\t" << theta[i] << "\t" << psi[i] << std::endl; // Euler angles
-		std::cout << timeVector[i] << "\t" << V1[i] << "\t" << V2[i] << "\t" << V3[i] << "\t" << Vmag[i] << std::endl; // Velocities
+		//std::cout << timeVector[i] << "\t" << V1[i] << "\t" << V2[i] << "\t" << V3[i] << "\t" << Vmag[i] << std::endl; // Velocities
 		//std::cout << timeVector[i] << "\t" << X1[i] << "\t" << X2[i] << "\t" << X3[i] << "\t" << Xmag[i] << std::endl; // Position
 
 	}
 	std::cout << "COPY AND PASTE THE ABOVE DATA INTO EXCEL (TAB DELIMITER)" << std::endl;
-	// Plotting stuff in C++
+	*/
+
+	// Plotting stuff in MatplotPlusPlus
+	matplot::plot(timeVector,p);
 
 
 	return 0;

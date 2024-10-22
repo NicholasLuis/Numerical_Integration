@@ -159,7 +159,12 @@ void RK4::run()
 		}
 
 		// Updating our DCM matrix
+			// Method 1
+		DCM = matAdd(DCM, matMult(totalCdot, dt));
 
+
+			// Method 2
+		/*
 		phi = x[0]; 
 		theta = x[1];
 		psi = x[2];
@@ -181,7 +186,7 @@ void RK4::run()
 			{0,			cos(phi),	-sin(phi)	},
 			{0,			sin(phi),	cos(phi)	} } };
 		DCM = matMult(rotation, DCM);
-
+		*/
 
 		cntr++;
 	}
