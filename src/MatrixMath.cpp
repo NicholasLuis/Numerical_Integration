@@ -33,8 +33,9 @@ std::array<std::array<double, 3>, 3> matMult(const std::array<std::array<double,
 
 	for (int i = 0; i < 3; i++) {         // Iterates over rows of arr1
 		for (int j = 0; j < 3; j++) {     // Iterates over cols of arr2
+			arrOut[i][j] = 0;
 			for (int k = 0; k < 3; k++) { // Iterates over cols of arr1 & rows of arr2
-				arrOut[i][j] = arr1[i][k] * arr2[k][j];
+				arrOut[i][j] += arr1[i][k] * arr2[k][j];
 			}
 		}
 	}

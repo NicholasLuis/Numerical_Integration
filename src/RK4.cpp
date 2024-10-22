@@ -40,9 +40,9 @@ RK4::RK4(const double input_dt, const double input_t0, const double input_tmax, 
 std::vector<double> RK4::ffunc(double t)
 {
 	// This function gets the angular velocity components in rad/s
-	double p = (PI / 6.0);
-	double q = cos(6.0 * t / PI);
-	double r = 3 * sin(30.0 * t / PI);
+	double p = (M_PI / 6.0);
+	double q = cos(6.0 * t / M_PI);
+	double r = 3 * sin(30.0 * t / M_PI);
 	return { p, q, r };
 }
 
@@ -123,6 +123,9 @@ std::vector<double> RK4::getTimeVec()
 void RK4::run()
 {
 	int cntr = 0;
+	std::array<std::array<double, 3>, 3> rotation;
+	x_history[0] = x;
+
 	for (double t = t0; t < tmax; t += dt) {
 
 		// Calculates the 4 estimates of derivative over the time interval
@@ -130,15 +133,15 @@ void RK4::run()
 		xdot1 = getXdot(stateArray);
 		Cdot1 = getCdot(stateArray);
 
-		stateArray = derivative(matAdd(x, matMult(xdot1, dt / 2)), matAdd(DCM, matMult(Cdot1, dt / 2)), Velo, t + dt);
+		stateArray = derivative(matAdd(x, matMult(xdot1, dt / 2)), matAdd(DCM, matMult(Cdot1, dt / 2)), Velo, t + dt/2);
 		xdot2 = getXdot(stateArray);
 		Cdot2 = getCdot(stateArray);
 
-		stateArray = derivative(matAdd(x, matMult(xdot2, dt / 2)), matAdd(DCM, matMult(Cdot2, dt / 2)), Velo, t + dt);
+		stateArray = derivative(matAdd(x, matMult(xdot2, dt / 2)), matAdd(DCM, matMult(Cdot2, dt / 2)), Velo, t + dt/2);
 		xdot3 = getXdot(stateArray);
 		Cdot3 = getCdot(stateArray);
 
-		stateArray = derivative(matAdd(x, matMult(xdot2, dt)), matAdd(DCM, matMult(Cdot2, dt)), Velo, t + dt);
+		stateArray = derivative(matAdd(x, matMult(xdot3, dt)), matAdd(DCM, matMult(Cdot3, dt)), Velo, t);
 		xdot4 = getXdot(stateArray);
 		Cdot4 = getCdot(stateArray);
 
@@ -149,7 +152,36 @@ void RK4::run()
 		// Update our state vector
 		x_history[cntr + 1] = matAdd(x_history[cntr], matMult(xdot_history[cntr], dt));
 		x = x_history[cntr + 1];
-		DCM = matAdd(DCM, matMult(totalCdot, dt));
+
+		if (cntr == 30)
+		{
+			x = x; // Used for debugging. Toggle breakpoint here
+		}
+
+		// Updating our DCM matrix
+
+		phi = x[0]; 
+		theta = x[1];
+		psi = x[2];
+
+		rotation =
+		{ { {cos(theta),		0,			sin(theta)	},
+			{0,					1,			0	},
+			{-sin(theta),		0,			cos(theta)	}} };
+		DCM = matMult(rotation, DCM);
+
+		rotation =
+		{ { {cos(psi),		-sin(psi),		0	},
+			{sin(psi),		cos(psi),		0	},
+			{0,				0,				1	}} };
+		DCM = matMult(rotation, DCM);
+
+		rotation =
+		{ { {1,				0,				0	},
+			{0,			cos(phi),	-sin(phi)	},
+			{0,			sin(phi),	cos(phi)	} } };
+		DCM = matMult(rotation, DCM);
+
 
 		cntr++;
 	}

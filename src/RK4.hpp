@@ -17,7 +17,7 @@ class RK4
 				Matrix, where each row is the state of the system at each time step
 	*/
 private:
-	const double PI = 3.141592653;
+	const double M_PI = 3.141592653;
 
 	// States of the system
 	std::vector<double> x0;

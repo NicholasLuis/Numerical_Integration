@@ -23,7 +23,7 @@
 		- Create an RK4 class/function (DONE)
 */
 
-const double PI = 3.141592653;
+const double PI = 3.14159265358979323846;
 
 int main()
 {
@@ -90,7 +90,7 @@ int main()
 	std::vector<double> Vmag(timeVector.size());
 	for (int i = 0; i < timeVector.size(); i++)
 	{
-		V1[i] = Xdot_totalData[i][6];
+		V1[i] = Xdot_totalData[i][6] - (1.362*timeVector[i]);
 		V2[i] = Xdot_totalData[i][7];
 		V3[i] = Xdot_totalData[i][8];
 		Vmag[i] = sqrt((V1[i] * V1[i]) + (V2[i] * V2[i]) + (V3[i] * V3[i]));
