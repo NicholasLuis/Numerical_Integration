@@ -1,4 +1,7 @@
+# This is the CMakeLists for the Numerical Integration project
+
 cmake_minimum_required(VERSION 3.14.0)
+set(CMAKE_CXX_STANDARD 14)
 project(NINT VERSION 0.1.0 LANGUAGES C CXX)
 
 include(CTest)
@@ -6,6 +9,7 @@ enable_testing()
 
 # Library
 add_subdirectory(matplotplusplus)
+include(GNUInstallDirs)
 
 # Our Project
 set(SOURCE_FILES

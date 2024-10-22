@@ -119,7 +119,7 @@ int main()
 
 	// Plotting stuff in MatplotPlusPlus
 	matplot::plot(timeVector,p);
-
+	matplot::show();
 
 	return 0;
 }
