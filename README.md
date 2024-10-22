@@ -15,9 +15,6 @@ Instructions on how to install the project:
 ```bash
 # Clone the repository
 git clone https://github.com/NicholasLuis/Numerical_Integration
-
-# Change directory into the project
-cd Numerical_Integration
 ```
 
 Create a Build folder and build the solution using CMake
