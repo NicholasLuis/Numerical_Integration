@@ -31,10 +31,13 @@ std::array<std::array<double, 3>, 3> matMult(const std::array<std::array<double,
 	// Hard-coded matrix multiplcation of a 3x3 by a 3x3 (Overload function)
 	std::array<std::array<double, 3>, 3> arrOut;
 
-	for (int i = 0; i < 3; i++) {         // Iterates over rows of arr1
-		for (int j = 0; j < 3; j++) {     // Iterates over cols of arr2
+	for (int i = 0; i < 3; i++)
+	{ // Iterates over rows of arr1
+		for (int j = 0; j < 3; j++)
+		{ // Iterates over cols of arr2
 			arrOut[i][j] = 0;
-			for (int k = 0; k < 3; k++) { // Iterates over cols of arr1 & rows of arr2
+			for (int k = 0; k < 3; k++)
+			{ // Iterates over cols of arr1 & rows of arr2
 				arrOut[i][j] += arr1[i][k] * arr2[k][j];
 			}
 		}
@@ -48,8 +51,10 @@ std::array<std::array<double, 3>, 3> matMult(const std::array<std::array<double,
 	// Hard-coded multiplcation of a 3x3 matrix by a scalar (Overload function)
 	std::array<std::array<double, 3>, 3> arrOut;
 
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 3; j++) {
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
 			arrOut[i][j] = arr[i][j] * scalar;
 		}
 	}
@@ -99,8 +104,10 @@ std::array<std::array<double, 3>, 3> getCdot(std::array<std::array<double, 9>, 2
 	std::array<std::array<double, 3>, 3> extractedDCM;
 
 	int iter = 0;
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 3; j++) {
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
 			extractedDCM[i][j] = input[1][iter];
 			iter++;
 		}
@@ -114,7 +121,8 @@ std::vector<double> getXdot(std::array<std::array<double, 9>, 2> input)
 	std::vector<double> extractedStateVector(9);
 
 	int iter = 0;
-	for (int i = 0; i < 9; i++) {
+	for (int i = 0; i < 9; i++)
+	{
 		extractedStateVector[i] = input[0][i];
 	}
 
