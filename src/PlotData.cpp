@@ -1,14 +1,14 @@
 #include "PlotData.hpp"
 
-
 void plot(const std::vector<std::string> plotLabels, const std::vector<std::string> inputDataLabels,
-	const std::vector<double> x, const std::vector<double> y1, const std::vector<double> y2, const std::vector<double> y3)
+		  const std::vector<double> x, const std::vector<double> y1, const std::vector<double> y2, const std::vector<double> y3)
 {
 	// This function plots 3 sets of data vs a common x
-	
+
 	// Initial Setup
 	auto fig = matplot::figure();
-	fig->size(1800, 600);
+	fig->size(900, 600);
+	fig->position(450, -300);
 
 	// Plotting the data
 	auto plot1 = matplot::plot(x, y1, "r");
@@ -17,7 +17,7 @@ void plot(const std::vector<std::string> plotLabels, const std::vector<std::stri
 	auto plot3 = matplot::plot(x, y3, "b");
 
 	// Formatting
-	auto l = ::matplot::legend({ inputDataLabels[0], inputDataLabels[1], inputDataLabels[2] });
+	auto l = ::matplot::legend({inputDataLabels[0], inputDataLabels[1], inputDataLabels[2]});
 	l->location(matplot::legend::general_alignment::topright);
 	matplot::title(plotLabels[0]);
 	matplot::xlabel(plotLabels[1]);
@@ -29,13 +29,14 @@ void plot(const std::vector<std::string> plotLabels, const std::vector<std::stri
 }
 
 void plot(const std::vector<std::string> plotLabels, const std::vector<std::string> inputDataLabels,
-	const std::vector<double> x, const std::vector<double> y1, const std::vector<double> y2, const std::vector<double> y3, const std::vector<double> y4) 
-{	
+		  const std::vector<double> x, const std::vector<double> y1, const std::vector<double> y2, const std::vector<double> y3, const std::vector<double> y4)
+{
 	// Overload function that plots 4 sets of data vs a common x
 
 	// Initial Setup
 	auto fig = matplot::figure();
-	fig->size(1800, 600);
+	fig->size(900, 600);
+	fig->position(450, -300);
 
 	// Plotting the data
 	auto plot1 = matplot::plot(x, y1, "r");
@@ -45,7 +46,7 @@ void plot(const std::vector<std::string> plotLabels, const std::vector<std::stri
 	auto plot4 = matplot::plot(x, y4, "black");
 
 	// Formatting
-	auto l = ::matplot::legend({ inputDataLabels[0], inputDataLabels[1], inputDataLabels[2] , inputDataLabels[3] });
+	auto l = ::matplot::legend({inputDataLabels[0], inputDataLabels[1], inputDataLabels[2], inputDataLabels[3]});
 	l->location(matplot::legend::general_alignment::topright);
 	matplot::title(plotLabels[0]);
 	matplot::xlabel(plotLabels[1]);
@@ -54,5 +55,4 @@ void plot(const std::vector<std::string> plotLabels, const std::vector<std::stri
 
 	matplot::show();
 	matplot::save(plotLabels[0], "jpeg");
-
 }

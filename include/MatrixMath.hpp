@@ -1,8 +1,8 @@
+#pragma once
+
 #include <vector>
 #include <array>
 #include <iostream>
-
-#pragma once
 
 // Matrix Multiplciation
 std::vector<double> matMult(const std::array<std::array<double, 3>, 3> arr, const std::vector<double> pqr_input);
